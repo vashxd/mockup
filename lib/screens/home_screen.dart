@@ -14,11 +14,10 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: const Color(0xFF003366),
         title: Row(
           children: [
-            Image.network(
-              'https://placehold.co/50x50?text=A',
+            Image.asset(
+              'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
               width: 30,
               height: 30,
-              color: Colors.white,
             ),
             const SizedBox(width: 8),
           ],
@@ -26,9 +25,11 @@ class HomeScreen extends StatelessWidget {
         actions: [
           CircleAvatar(
             radius: 18,
-            backgroundImage: NetworkImage(
-              'https://placehold.co/100x100?text=${student.name[0]}',
-            ),
+            backgroundImage: student.profileImagePath != null
+              ? AssetImage(student.profileImagePath!)
+              : NetworkImage(
+                  'https://placehold.co/100x100?text=${student.name[0]}',
+                ) as ImageProvider,
           ),
           const SizedBox(width: 16),
           IconButton(
@@ -47,9 +48,11 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 40,
-                    backgroundImage: NetworkImage(
-                      'https://placehold.co/200x200?text=${student.name[0]}',
-                    ),
+                    backgroundImage: student.profileImagePath != null
+                      ? AssetImage(student.profileImagePath!)
+                      : NetworkImage(
+                          'https://placehold.co/200x200?text=${student.name[0]}',
+                        ) as ImageProvider,
                   ),
                   const SizedBox(height: 10),
                   Text(

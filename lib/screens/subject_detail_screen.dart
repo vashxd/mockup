@@ -16,9 +16,20 @@ class SubjectDetailScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Detalhes do Boletim',
-          style: TextStyle(color: Colors.white),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
+              width: 30,
+              height: 30,
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              'Detalhes do Boletim',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
         ),
         centerTitle: true,
       ),

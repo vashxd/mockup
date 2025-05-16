@@ -26,17 +26,30 @@ class ReportCardScreen extends StatelessWidget {
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () => Navigator.pop(context),
         ),
-        title: const Text(
-          'Boletim',
-          style: TextStyle(color: Colors.white),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
+              width: 30,
+              height: 30,
+            ),
+            const SizedBox(width: 8),
+            const Text(
+              'Boletim',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
         ),
         centerTitle: true,
         actions: [
           CircleAvatar(
             radius: 18,
-            backgroundImage: NetworkImage(
-              'https://placehold.co/100x100?text=${student.name[0]}',
-            ),
+            backgroundImage: student.profileImagePath != null
+              ? AssetImage(student.profileImagePath!)
+              : NetworkImage(
+                  'https://placehold.co/100x100?text=${student.name[0]}',
+                ) as ImageProvider,
           ),
           const SizedBox(width: 16),
         ],

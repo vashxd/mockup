@@ -7,6 +7,7 @@ final Student mockStudent = Student(
   grade: '8º Ano',
   period: 'Tarde',
   classId: 'A',
+  profileImagePath: 'assets/images/profile_image.jfif',
 );
 
 // Dados mockados das disciplinas

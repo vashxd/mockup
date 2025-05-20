@@ -23,19 +23,52 @@ class HomeScreen extends StatelessWidget {
           ],
         ),
         actions: [
-          CircleAvatar(
-            radius: 18,
-            backgroundImage: student.profileImagePath != null
-              ? AssetImage(student.profileImagePath!)
-              : NetworkImage(
-                  'https://placehold.co/100x100?text=${student.name[0]}',
-                ) as ImageProvider,
+          PopupMenuButton<String>(
+            offset: const Offset(0, 40),
+            icon: CircleAvatar(
+              radius: 18,
+              backgroundImage: student.profileImagePath != null
+                ? AssetImage(student.profileImagePath!)
+                : NetworkImage(
+                    'https://placehold.co/100x100?text=${student.name[0]}',
+                  ) as ImageProvider,
+            ),
+            onSelected: (value) {
+              if (value == 'profile') {
+                Navigator.pushNamed(context, '/profile', arguments: student);
+              } else if (value == 'logout') {
+                // Navegando para a tela de login
+                Navigator.pushNamedAndRemoveUntil(
+                  context, 
+                  '/login', 
+                  (route) => false
+                );
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'profile',
+                child: Row(
+                  children: [
+                    Icon(Icons.person),
+                    SizedBox(width: 8),
+                    Text('Perfil'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'logout',
+                child: Row(
+                  children: [
+                    Icon(Icons.exit_to_app),
+                    SizedBox(width: 8),
+                    Text('Sair'),
+                  ],
+                ),
+              ),
+            ],
           ),
           const SizedBox(width: 16),
-          IconButton(
-            icon: const Icon(Icons.settings, color: Colors.white),
-            onPressed: () {},
-          ),
         ],
       ),
       body: SingleChildScrollView(
@@ -83,13 +116,17 @@ class HomeScreen extends StatelessWidget {
                   context,
                   icon: Icons.book,
                   label: 'Atividade',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/activities');
+                  },
                 ),
                 _buildServiceItem(
                   context,
                   icon: Icons.calendar_today,
                   label: 'Calendário',
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, '/calendar');
+                  },
                 ),
                 _buildServiceItem(
                   context,
@@ -130,9 +167,11 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: _buildServiceCard(
                           context,
-                          icon: Icons.attach_money,
-                          label: 'Financeiro',
-                          onTap: () {},
+                          icon: Icons.notifications_none,
+                          label: 'Notificação',
+                          onTap: () {
+                            Navigator.pushNamed(context, '/notifications');
+                          },
                           showArrow: true,
                         ),
                       ),
@@ -141,46 +180,26 @@ class HomeScreen extends StatelessWidget {
                   const SizedBox(height: 16),
                   Row(
                     children: [
-                      Expanded(
-                        child: _buildServiceCard(
-                          context,
-                          icon: Icons.notifications_none,
-                          label: 'Notificação',
-                          onTap: () {},
-                          showArrow: true,
-                        ),
-                      ),
-                      const SizedBox(width: 16),
                       Expanded(
                         child: _buildServiceCard(
                           context,
                           icon: Icons.link,
                           label: 'e-Class',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.pushNamed(context, '/eclass');
+                          },
                           showExternalIcon: true,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: _buildServiceCard(
-                          context,
-                          icon: Icons.insert_drive_file,
-                          label: 'Documentos',
-                          onTap: () {},
-                          showArrow: true,
                         ),
                       ),
                       const SizedBox(width: 16),
                       Expanded(
                         child: _buildServiceCard(
                           context,
-                          icon: Icons.receipt_long,
-                          label: 'Extrato de\nPagamentos',
-                          onTap: () {},
+                          icon: Icons.insert_drive_file,
+                          label: 'Documentos',
+                          onTap: () {
+                            Navigator.pushNamed(context, '/documents');
+                          },
                           showArrow: true,
                         ),
                       ),

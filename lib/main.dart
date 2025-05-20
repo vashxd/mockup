@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'dart:io' show Platform;
 import 'screens/home_screen.dart';
 import 'screens/login_screen.dart';
@@ -21,19 +21,20 @@ import 'models/eclass_course.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   
-  // Definir a orientação do aplicativo para retrato apenas
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-    DeviceOrientation.portraitDown,
-  ]);
+  // Definir a orientação do aplicativo para retrato apenas (apenas em dispositivos móveis)
+  // No ambiente web, não limitamos a orientação
+  if (!kIsWeb) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+  }
   
   // Definir a cor da barra de status
-  if (Platform.isAndroid) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Color(0xFF003366),
-      statusBarIconBrightness: Brightness.light,
-    ));
-  }
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Color(0xFF003366),
+    statusBarIconBrightness: Brightness.light,
+  ));
   
   runApp(const MyApp());
 }
@@ -50,83 +51,7 @@ class MyApp extends StatelessWidget {
     final mockActivities = mockData.getActivities();
     final mockCalendarEvents = mockData.getCalendarEvents();
     
-    return Platform.isIOS
-        ? CupertinoApp(
-            title: 'Escola App',
-            debugShowCheckedModeBanner: false,
-            theme: const CupertinoThemeData(
-              primaryColor: Color(0xFF003366),
-              primaryContrastingColor: Colors.white,
-              barBackgroundColor: Color(0xFF003366),
-              scaffoldBackgroundColor: Colors.white,
-              textTheme: CupertinoTextThemeData(
-                primaryColor: Color(0xFF003366),
-              ),
-            ),
-            home: const LoginScreen(),
-            routes: {
-              '/home': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student;
-                return HomeScreen(student: student);
-              },
-              '/profile': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return ProfileScreen(student: student);
-              },
-              '/report_card': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return ReportCardScreen(
-                  student: student,
-                  subjects: mockSubjects,
-                  totalAbsences: mockData.getTotalAbsences(),
-                  totalFrequency: mockData.getAverageFrequency(),
-                );
-              },
-              '/documents': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return DocumentsScreen(
-                  student: student,
-                  documents: mockDocuments,
-                );
-              },
-              '/notifications': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return NotificationsScreen(
-                  student: student,
-                  notifications: mockNotifications,
-                );
-              },
-              '/eclass': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return EClassScreen(
-                  student: student,
-                  courses: mockEClassCourses,
-                );
-              },
-              '/activities': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return ActivitiesScreen(
-                  student: student,
-                  activities: mockActivities,
-                );
-              },
-              '/calendar': (context) {
-                final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
-                    MockData().getStudents().first;
-                return CalendarScreen(
-                  student: student,
-                  events: mockCalendarEvents,
-                );
-              },
-            },
-          )
-        : MaterialApp(
+    return MaterialApp(
             title: 'Escola App',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
@@ -146,7 +71,8 @@ class MyApp extends StatelessWidget {
       routes: {
         '/login': (context) => const LoginScreen(),
         '/home': (context) {
-          final student = ModalRoute.of(context)!.settings.arguments as Student;
+          final student = ModalRoute.of(context)!.settings.arguments as Student? ?? 
+              MockData().getStudents().first;
           return HomeScreen(student: student);
         },
         '/profile': (context) {

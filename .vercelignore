@@ -1,7 +1,16 @@
-# Arquivos de desenvolvimento Flutter
+# Arquivos de desenvolvimento Flutter - IGNORAR
 .dart_tool/
 .packages
 pubspec.lock
+pubspec.yaml
+analysis_options.yaml
+escola_app.iml
+.idea/
+.git/
+.gitignore
+.metadata
+
+# Diretórios de desenvolvimento - IGNORAR
 android/
 ios/
 linux/
@@ -11,15 +20,11 @@ test/
 lib/
 web/
 build/
-assets/images/
-assets/logo/
+
+# Scripts e documentação - IGNORAR
 *.md
 *.ps1
 *.bat
-analysis_options.yaml
-pubspec.yaml
-escola_app.iml
-.idea/
-.git/
-.gitignore
-.metadata
+
+# Manter apenas arquivos estáticos na raiz:
+# index.html, main.dart.js, flutter.js, etc.

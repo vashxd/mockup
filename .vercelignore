@@ -1,0 +1,19 @@
+# Arquivos a serem ignorados no deploy do Vercel
+.dart_tool/
+.packages
+pubspec.lock
+android/
+ios/
+linux/
+macos/
+windows/
+test/
+lib/
+web/
+assets/
+*.md
+*.ps1
+*.bat
+analysis_options.yaml
+pubspec.yaml
+escola_app.iml

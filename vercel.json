@@ -1,4 +1,6 @@
 {
+  "installCommand": "echo 'Static deployment - no install needed'",
+  "buildCommand": "echo 'Static deployment - no build needed'",
   "outputDirectory": ".",
   "rewrites": [
     {

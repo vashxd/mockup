@@ -6,6 +6,13 @@ class EClassCourse {
   final double progress;
   final int materialsCount;
   final int activitiesCount;
+  final String subject;
+  final String title;
+  final String description;
+  final int totalLessons;
+  final int duration;
+  final String level;
+  final int newMaterials;
   
   EClassCourse({
     required this.id,
@@ -15,5 +22,12 @@ class EClassCourse {
     required this.progress,
     required this.materialsCount,
     required this.activitiesCount,
+    required this.subject,
+    required this.title,
+    required this.description,
+    required this.totalLessons,
+    required this.duration,
+    required this.level,
+    this.newMaterials = 0,
   });
 }

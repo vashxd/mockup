@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
-import 'dart:io' show Platform;
 import '../models/eclass_course.dart';
-import '../models/eclass_material.dart';
 import '../data/mock_data.dart';
 
 class EClassCourseDetailScreen extends StatefulWidget {
@@ -32,895 +29,533 @@ class _EClassCourseDetailScreenState extends State<EClassCourseDetailScreen> wit
     _tabController.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
-    if (Platform.isIOS) {
-      return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          backgroundColor: const Color(0xFF003366),
-          leading: CupertinoButton(
-            padding: EdgeInsets.zero,
-            child: const Icon(CupertinoIcons.back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
-          middle: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
-                width: 30,
-                height: 30,
-              ),
-              const SizedBox(width: 8),
-              const Text(
-                'e-Class',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-        ),
-        child: _buildBody(context),
-      );
-    } else {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: const Color(0xFF003366),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.pop(context),
-          ),
-          title: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Image.asset(
-                'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
-                width: 30,
-                height: 30,
-              ),
-              const SizedBox(width: 8),
-              const Text(
-                'e-Class',
-                style: TextStyle(color: Colors.white),
-              ),
-            ],
-          ),
-          centerTitle: true,
-        ),
-        body: _buildBody(context),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            if (Platform.isIOS) {
-              showCupertinoDialog(
-                context: context,
-                builder: (context) => CupertinoAlertDialog(
-                  title: const Text('Contatar Professor'),
-                  content: const Text('Iniciando chat com o professor...'),
-                  actions: [
-                    CupertinoDialogAction(
-                      child: const Text('OK'),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                  ],
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Header moderno com gradiente
+            Container(
+              width: double.infinity,
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
                 ),
-              );
-            } else {
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Contactando professor...'),
-                  duration: Duration(seconds: 2),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(32),
+                  bottomRight: Radius.circular(32),
                 ),
-              );
-            }
-          },
-          backgroundColor: const Color(0xFF003366),
-          child: const Icon(Icons.chat, color: Colors.white),
-        ),
-      );
-    }
-  }
-  
-  Widget _buildBody(BuildContext context) {
-    return Column(
-      children: [
-        // Banner do curso
-        Container(
-          height: 150,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage('assets/logo/ChatGPT Image 20 de mai. de 2025, 08_14_36.png'),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.bottomCenter,
-                end: Alignment.topCenter,
-                colors: [Colors.black.withOpacity(0.7), Colors.transparent],
               ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    widget.course.name,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
+                  const SizedBox(height: 16),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.white),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          padding: const EdgeInsets.all(2),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(14),
+                            child: Image.asset(
+                              'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
+                              width: 28,
+                              height: 28,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 12),
+                        const Expanded(
+                          child: Text(
+                            'e-Class',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  Text(
-                    widget.course.teacher,
-                    style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  ),
+                  const SizedBox(height: 24),
                 ],
               ),
             ),
-          ),
+            Expanded(
+              child: _buildModernBody(context),
+            ),
+          ],
         ),
-        
-        // Progress Bar
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Row(
                 children: [
-                  Flexible(
-                    child: Text(
-                      'Progresso: ${(widget.course.progress * 100).toInt()}%',
-                      style: const TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(width: 4),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(
-                        Platform.isIOS ? CupertinoIcons.book : Icons.book, 
-                        size: 13, 
-                        color: const Color(0xFF003366)
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        '${widget.course.materialsCount}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Icon(
-                        Platform.isIOS ? CupertinoIcons.doc_text : Icons.assignment, 
-                        size: 13, 
-                        color: const Color(0xFF003366)
-                      ),
-                      const SizedBox(width: 2),
-                      Text(
-                        '${widget.course.activitiesCount}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                        ),
-                      ),
-                    ],
-                  ),
+                  Icon(Icons.chat_rounded, color: Colors.white),
+                  SizedBox(width: 8),
+                  Text('Contactando professor...'),
                 ],
               ),
-              const SizedBox(height: 8),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10),
-                child: LinearProgressIndicator(
-                  value: widget.course.progress,
-                  minHeight: 7,
-                  backgroundColor: Colors.grey[200],
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    const Color(0xFF003366),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-          // Tab Bar
-        Platform.isIOS 
-        ? CupertinoSegmentedControl<int>(
-            children: const {
-              0: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Text('MATERIAIS', style: TextStyle(fontSize: 13)),
-              ),
-              1: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-                child: Text('ATIVIDADES', style: TextStyle(fontSize: 13)),
-              ),
-            },
-            groupValue: _tabController.index,
-            onValueChanged: (int value) {
-              setState(() {
-                _tabController.animateTo(value);
-              });
-            },
-            borderColor: const Color(0xFF003366),
-            selectedColor: const Color(0xFF003366),
-            unselectedColor: Colors.white,
-          )
-        : Container(
-          height: 50,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(color: Colors.grey[300]!),
-            ),
-          ),
-          child: TabBar(
-            controller: _tabController,
-            indicatorColor: const Color(0xFF003366),
-            labelColor: const Color(0xFF003366),
-            unselectedLabelColor: Colors.grey[600],
-            tabs: const [
-              Tab(text: 'MATERIAIS'),
-              Tab(text: 'ATIVIDADES'),
-            ],
-          ),
-        ),
-        
-        // Tab Content
-        Expanded(
-          child: TabBarView(
-            controller: _tabController,
-            children: [
-              // Materiais Tab
-              _buildMaterialsTab(),
-              
-              // Atividades Tab
-              _buildActivitiesTab(),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-  
-  Widget _buildMaterialsTab() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with course info
-          _buildCourseHeader(),
-          
-          // Materials section
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'MATERIAIS DO CURSO',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF003366),
+              backgroundColor: const Color(0xFF6366F1),
+              duration: const Duration(seconds: 2),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
               ),
             ),
-          ),
-            // Filter options
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Platform.isIOS
-                      ? GestureDetector(
-                          onTap: () {
-                            showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) => CupertinoActionSheet(
-                                title: const Text('Selecione um tipo'),
-                                actions: [
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Todos os tipos'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Todos');
-                                    },
-                                  ),
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Documentos'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'pdf');
-                                    },
-                                  ),
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Vídeos'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'video');
-                                    },
-                                  ),
-                                ],
-                                cancelButton: CupertinoActionSheetAction(
-                                  child: const Text('Cancelar'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Todos os tipos'),
-                                const Icon(CupertinoIcons.chevron_down, size: 16),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: 'Todos',
-                              isExpanded: true,
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Todos',
-                                  child: Text('Todos os tipos'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'pdf',
-                                  child: Text('Documentos'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'video',
-                                  child: Text('Vídeos'),
-                                ),
-                              ],
-                              onChanged: (value) {},
-                            ),
-                          ),
-                        ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Platform.isIOS
-                      ? GestureDetector(
-                          onTap: () {
-                            showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) => CupertinoActionSheet(
-                                title: const Text('Selecione uma ordenação'),
-                                actions: [
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Mais recentes'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Recentes');
-                                    },
-                                  ),
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Mais antigos'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Antigos');
-                                    },
-                                  ),
-                                ],
-                                cancelButton: CupertinoActionSheetAction(
-                                  child: const Text('Cancelar'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Mais recentes'),
-                                const Icon(CupertinoIcons.chevron_down, size: 16),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: 'Recentes',
-                              isExpanded: true,
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Recentes',
-                                  child: Text('Mais recentes'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Antigos',
-                                  child: Text('Mais antigos'),
-                                ),
-                              ],
-                              onChanged: (value) {},
-                            ),
-                          ),
-                        ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          
-          // Materials list
-          _buildMaterialsList(),
-        ],
+          );
+        },
+        backgroundColor: const Color(0xFF6366F1),
+        foregroundColor: Colors.white,
+        icon: const Icon(Icons.chat_rounded),
+        label: const Text(
+          'Chat',
+          style: TextStyle(fontWeight: FontWeight.w600),
+        ),
+        elevation: 8,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
       ),
     );
   }
-
-  Widget _buildMaterialsList() {
-    final materials = _mockData.getMathMaterials();
-    
-    return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: materials.length,
-      itemBuilder: (context, index) {
-        final material = materials[index];
-        
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Container(
+  
+  Widget _buildModernBody(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      constraints: const BoxConstraints(maxWidth: 1200),
+      margin: const EdgeInsets.symmetric(horizontal: 20),
+      child: Column(
+        children: [
+          const SizedBox(height: 24),
+          
+          // Card do curso moderno
+          Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(24),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade200,
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
+                  color: Colors.black.withOpacity(0.08),
+                  blurRadius: 20,
+                  offset: const Offset(0, 4),
                 ),
               ],
             ),
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(16),
-              leading: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: material.type == 'pdf' 
-                      ? Colors.red.shade100 
-                      : Colors.blue.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                ),                child: Icon(
-                  material.type == 'pdf' 
-                      ? (Platform.isIOS ? CupertinoIcons.doc_fill : Icons.picture_as_pdf)
-                      : (Platform.isIOS ? CupertinoIcons.play_rectangle_fill : Icons.video_library),
-                  color: material.type == 'pdf' 
-                      ? Colors.red 
-                      : Colors.blue,
-                ),
-              ),
-              title: Row(
-                children: [
-                  Expanded(
-                    child: Text(
-                      material.title,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
+            child: Column(
+              children: [
+                // Banner do curso
+                ClipRRect(
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(24),
+                    topRight: Radius.circular(24),
                   ),
-                  if (material.isNew)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      child: const Text(
-                        'NOVO',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 10,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  child: Container(
+                    height: 160,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: _getCourseGradient(widget.course.subject),
                       ),
                     ),
-                ],
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 4),
-                  Text(material.description),
-                  const SizedBox(height: 8),                  Row(
-                    children: [
-                      Icon(
-                        Platform.isIOS ? CupertinoIcons.calendar : Icons.calendar_today,
-                        size: 12,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        material.date,
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const Spacer(),
-                      if (material.isCompleted)
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade50,
-                            borderRadius: BorderRadius.circular(4),
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Image.asset(
+                            'assets/logo/ChatGPT Image 20 de mai. de 2025, 08_14_36.png',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                    colors: _getCourseGradient(widget.course.subject),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                          child: Row(
-                            children: [                              Icon(
-                                Platform.isIOS ? CupertinoIcons.checkmark_circle : Icons.check_circle,
-                                size: 12,
-                                color: Colors.green.shade800,
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                              colors: [
+                                Colors.black.withOpacity(0.7),
+                                Colors.transparent,
+                              ],
+                            ),
+                          ),
+                        ),
+                        Positioned(
+                          bottom: 20,
+                          left: 20,
+                          right: 20,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white.withOpacity(0.2),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Icon(
+                                      _getCourseIcon(widget.course.subject),
+                                      color: Colors.white,
+                                      size: 20,
+                                    ),
+                                  ),
+                                  const SizedBox(width: 12),
+                                  Expanded(
+                                    child: Text(
+                                      widget.course.title,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              const SizedBox(width: 4),
+                              const SizedBox(height: 8),
                               Text(
-                                'Concluído',
+                                widget.course.subject,
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  color: Colors.green.shade800,
+                                  color: Colors.white.withOpacity(0.9),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
                                 ),
                               ),
                             ],
                           ),
                         ),
+                      ],
+                    ),
+                  ),
+                ),
+                
+                // Conteúdo do card
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Progresso do curso
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: const Color(0xFF6366F1).withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: const Icon(
+                              Icons.timeline_rounded,
+                              color: Color(0xFF6366F1),
+                              size: 16,
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            'Progresso do Curso',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Color(0xFF6B7280),
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            '${widget.course.progress.toInt()}%',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xFF6366F1),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 12),
+                      LinearProgressIndicator(
+                        value: widget.course.progress / 100,
+                        backgroundColor: const Color(0xFFE5E7EB),
+                        valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF6366F1)),
+                        borderRadius: BorderRadius.circular(6),
+                        minHeight: 6,
+                      ),
+                      const SizedBox(height: 20),
+                      
+                      // Descrição
+                      Text(
+                        widget.course.description,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF6B7280),
+                          height: 1.5,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      
+                      // Stats do curso
+                      Row(
+                        children: [
+                          Expanded(
+                            child: _buildCourseStatCard(
+                              icon: Icons.play_circle_outline_rounded,
+                              label: 'Aulas',
+                              value: '${widget.course.totalLessons}',
+                              color: const Color(0xFF10B981),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildCourseStatCard(
+                              icon: Icons.access_time_rounded,
+                              label: 'Duração',
+                              value: '${widget.course.duration}h',
+                              color: const Color(0xFFF59E0B),
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+                          Expanded(
+                            child: _buildCourseStatCard(
+                              icon: Icons.school_rounded,
+                              label: 'Nível',
+                              value: widget.course.level,
+                              color: const Color(0xFF8B5CF6),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
-                ],
-              ),
-              onTap: () {
-                // Ação ao clicar no material
-              },
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  Widget _buildActivitiesTab() {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Header with course info
-          _buildCourseHeader(),
-          
-          // Activities section
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'ATIVIDADES DO CURSO',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF003366),
-              ),
-            ),
-          ),
-            // Filter options
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Platform.isIOS
-                      ? GestureDetector(
-                          onTap: () {
-                            showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) => CupertinoActionSheet(
-                                title: const Text('Selecione um status'),
-                                actions: [
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Todos os status'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Todos');
-                                    },
-                                  ),
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Pendentes'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Pendentes');
-                                    },
-                                  ),
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Concluídas'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Concluídas');
-                                    },
-                                  ),
-                                ],
-                                cancelButton: CupertinoActionSheetAction(
-                                  child: const Text('Cancelar'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Todos os status'),
-                                const Icon(CupertinoIcons.chevron_down, size: 16),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: 'Todos',
-                              isExpanded: true,
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Todos',
-                                  child: Text('Todos os status'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Pendentes',
-                                  child: Text('Pendentes'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Concluídas',
-                                  child: Text('Concluídas'),
-                                ),
-                              ],
-                              onChanged: (value) {},
-                            ),
-                          ),
-                        ),
-                ),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Platform.isIOS
-                      ? GestureDetector(
-                          onTap: () {
-                            showCupertinoModalPopup(
-                              context: context,
-                              builder: (context) => CupertinoActionSheet(
-                                title: const Text('Selecione uma ordenação'),
-                                actions: [
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Por prazo'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Prazos');
-                                    },
-                                  ),
-                                  CupertinoActionSheetAction(
-                                    child: const Text('Por título'),
-                                    onPressed: () {
-                                      Navigator.pop(context, 'Título');
-                                    },
-                                  ),
-                                ],
-                                cancelButton: CupertinoActionSheetAction(
-                                  child: const Text('Cancelar'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ),
-                            );
-                          },
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.grey.shade300),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                const Text('Por prazo'),
-                                const Icon(CupertinoIcons.chevron_down, size: 16),
-                              ],
-                            ),
-                          ),
-                        )
-                      : Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey.shade300),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: DropdownButtonHideUnderline(
-                            child: DropdownButton<String>(
-                              value: 'Prazos',
-                              isExpanded: true,
-                              items: const [
-                                DropdownMenuItem(
-                                  value: 'Prazos',
-                                  child: Text('Por prazo'),
-                                ),
-                                DropdownMenuItem(
-                                  value: 'Título',
-                                  child: Text('Por título'),
-                                ),
-                              ],
-                              onChanged: (value) {},
-                            ),
-                          ),
-                        ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 16),
           
-          // Activities list
-          _buildActivitiesList(),
+          const SizedBox(height: 24),
+          
+          // Tabs modernas
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.05),
+                    blurRadius: 10,
+                    offset: const Offset(0, 2),
+                  ),
+                ],
+              ),
+              child: Column(
+                children: [
+                  TabBar(
+                    controller: _tabController,
+                    tabs: const [
+                      Tab(text: 'Aulas'),
+                      Tab(text: 'Materiais'),
+                    ],
+                    labelColor: const Color(0xFF6366F1),
+                    unselectedLabelColor: const Color(0xFF6B7280),
+                    labelStyle: const TextStyle(
+                      fontWeight: FontWeight.w600,
+                      fontSize: 16,
+                    ),
+                    unselectedLabelStyle: const TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    indicator: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFF6366F1), Color(0xFF8B5CF6)],
+                      ),
+                    ),
+                    indicatorPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                    dividerColor: Colors.transparent,
+                  ),
+                  Expanded(
+                    child: TabBarView(
+                      controller: _tabController,
+                      children: [
+                        _buildModernLessonsTab(),
+                        _buildModernMaterialsTab(),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 24),
         ],
       ),
     );
   }
 
-  Widget _buildActivitiesList() {
-    final activities = _mockData.getMathActivities();
+  Widget _buildCourseStatCard({
+    required IconData icon,
+    required String label,
+    required String value,
+    required Color color,
+  }) {
+    return Container(
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: color.withOpacity(0.2),
+          width: 1.5,
+        ),
+      ),
+      child: Column(
+        children: [
+          Icon(
+            icon,
+            color: color,
+            size: 20,
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w700,
+              color: color,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF6B7280),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildModernLessonsTab() {
+    final lessons = _mockData.getLessonsForCourse(widget.course.id);
     
     return ListView.builder(
-      shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
-      itemCount: activities.length,
+      padding: const EdgeInsets.all(20),
+      itemCount: lessons.length,
       itemBuilder: (context, index) {
-        final activity = activities[index];
+        final lesson = lessons[index];
+        final isCompleted = index < (widget.course.progress / 100 * lessons.length).floor();
         
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          padding: const EdgeInsets.only(bottom: 16),
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(8),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(
+                color: isCompleted 
+                  ? const Color(0xFF10B981).withOpacity(0.3)
+                  : const Color(0xFFE5E7EB),
+                width: 1.5,
+              ),
               boxShadow: [
                 BoxShadow(
-                  color: Colors.grey.shade200,
-                  blurRadius: 4,
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 8,
                   offset: const Offset(0, 2),
                 ),
               ],
             ),
-            child: ListTile(
-              contentPadding: const EdgeInsets.all(16),
-              leading: Container(
-                width: 48,
-                height: 48,
-                decoration: BoxDecoration(
-                  color: activity.isCompleted
-                      ? Colors.green.shade100
-                      : Colors.orange.shade100,
-                  borderRadius: BorderRadius.circular(8),
-                ),                child: Icon(
-                  activity.isCompleted
-                      ? (Platform.isIOS ? CupertinoIcons.checkmark_circle : Icons.task_alt)
-                      : (Platform.isIOS ? CupertinoIcons.clock : Icons.pending_actions),
-                  color: activity.isCompleted
-                      ? Colors.green
-                      : Colors.orange,
-                ),
-              ),
-              title: Text(
-                activity.title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
                 children: [
-                  const SizedBox(height: 4),
-                  Text(activity.description),
-                  const SizedBox(height: 8),
-                  Row(                    children: [
-                      Icon(
-                        Platform.isIOS ? CupertinoIcons.calendar : Icons.calendar_today,
-                        size: 12,
-                        color: Colors.grey,
-                      ),
-                      const SizedBox(width: 4),
-                      Text(
-                        'Prazo: ${activity.dueDate}',
-                        style: const TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey,
-                        ),
-                      ),
-                      const Spacer(),
-                      if (activity.isCompleted)
-                        Row(
-                          children: [
-                            const Text(
-                              'Nota: ',
-                              style: TextStyle(
-                                fontSize: 12,
-                              ),
-                            ),
-                            Text(
-                              '${activity.grade}/${activity.maxGrade}',
-                              style: TextStyle(
-                                fontSize: 12,
-                                fontWeight: FontWeight.bold,
-                                color: activity.grade! >= activity.maxGrade * 0.6
-                                    ? Colors.green
-                                    : Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                    ],
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: isCompleted 
+                        ? const Color(0xFF10B981)
+                        : const Color(0xFF6B7280),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Icon(
+                      isCompleted 
+                        ? Icons.check_rounded
+                        : Icons.play_arrow_rounded,
+                      color: Colors.white,
+                      size: 24,
+                    ),
                   ),
-                  if (activity.isLate && activity.isCompleted)
-                    Padding(
-                      padding: const EdgeInsets.only(top: 4.0),
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                        decoration: BoxDecoration(
-                          color: Colors.red.shade50,
-                          borderRadius: BorderRadius.circular(4),
-                        ),
-                        child: Text(
-                          'Entregue com atraso',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.red.shade800,
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,                      children: [
+                        Text(
+                          lesson.title,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF1F2937),
                           ),
                         ),
-                      ),
+                        const SizedBox(height: 4),
+                        Text(
+                          lesson.description,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF6B7280),
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                  Icon(
+                    Icons.arrow_forward_ios_rounded,
+                    color: const Color(0xFF9CA3AF),
+                    size: 16,
+                  ),
                 ],
               ),
-              onTap: () {
-                // Ação ao clicar na atividade
-              },
             ),
           ),
         );
@@ -928,121 +563,178 @@ class _EClassCourseDetailScreenState extends State<EClassCourseDetailScreen> wit
     );
   }
 
-  Widget _buildCourseHeader() {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(16),
-      decoration: const BoxDecoration(
-        color: Color(0xFFF5F5F5),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  'assets/logo/ChatGPT Image 20 de mai. de 2025, 08_14_36.png',
-                  width: 80,
-                  height: 80,
-                  fit: BoxFit.cover,
+  Widget _buildModernMaterialsTab() {
+    final materials = _mockData.getMaterialsForCourse(widget.course.id);
+    
+    return ListView.builder(
+      padding: const EdgeInsets.all(20),
+      itemCount: materials.length,
+      itemBuilder: (context, index) {
+        final material = materials[index];
+        
+        return Padding(
+          padding: const EdgeInsets.only(bottom: 16),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: const Color(0xFFE5E7EB)),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 8,
+                  offset: const Offset(0, 2),
                 ),
-              ),
-              const SizedBox(width: 16),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.course.name,
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xFF003366),
-                      ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                children: [
+                  Container(
+                    width: 48,
+                    height: 48,
+                    decoration: BoxDecoration(
+                      color: _getMaterialColor(material.type).withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      widget.course.teacher,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey,
-                      ),
+                    child: Icon(
+                      _getMaterialIcon(material.type),
+                      color: _getMaterialColor(material.type),
+                      size: 24,
                     ),
-                    const SizedBox(height: 8),                      Row(
+                  ),
+                  const SizedBox(width: 16),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Icon(
-                          Platform.isIOS ? CupertinoIcons.book : Icons.book,
-                          size: 14,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 4),
                         Text(
-                          '${widget.course.materialsCount} materiais',
+                          material.title,
                           style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Color(0xFF1F2937),
                           ),
                         ),
-                        const SizedBox(width: 16),
-                        Icon(
-                          Platform.isIOS ? CupertinoIcons.doc_text : Icons.assignment,
-                          size: 14,
-                          color: Colors.grey,
-                        ),
-                        const SizedBox(width: 4),
+                        const SizedBox(height: 4),
                         Text(
-                          '${widget.course.activitiesCount} atividades',
+                          material.description,
                           style: const TextStyle(
-                            fontSize: 12,
-                            color: Colors.grey,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: Color(0xFF6B7280),
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 8),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          decoration: BoxDecoration(
+                            color: _getMaterialColor(material.type).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            material.type.toUpperCase(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: _getMaterialColor(material.type),
+                            ),
                           ),
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 16),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                'Progresso do Curso',
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              const SizedBox(height: 8),
-              Row(
-                children: [
-                  Expanded(
-                    child: LinearProgressIndicator(
-                      value: widget.course.progress,
-                      backgroundColor: Colors.grey.shade300,
-                      valueColor: const AlwaysStoppedAnimation<Color>(Color(0xFF003366)),
-                      minHeight: 8,
-                      borderRadius: BorderRadius.circular(4),
-                    ),
                   ),
-                  const SizedBox(width: 16),
-                  Text(
-                    '${(widget.course.progress * 100).toInt()}%',
-                    style: const TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
+                  const SizedBox(width: 12),
+                  Icon(
+                    Icons.download_rounded,
+                    color: const Color(0xFF6366F1),
+                    size: 20,
                   ),
                 ],
               ),
-            ],
+            ),
           ),
-        ],
-      ),
+        );
+      },
     );
+  }
+
+  List<Color> _getCourseGradient(String subject) {
+    switch (subject.toLowerCase()) {
+      case 'matemática':
+        return [const Color(0xFF3B82F6), const Color(0xFF1E40AF)];
+      case 'português':
+        return [const Color(0xFF10B981), const Color(0xFF059669)];
+      case 'ciências':
+        return [const Color(0xFF8B5CF6), const Color(0xFF7C3AED)];
+      case 'história':
+        return [const Color(0xFFF59E0B), const Color(0xFFD97706)];
+      case 'geografia':
+        return [const Color(0xFF06B6D4), const Color(0xFF0891B2)];
+      case 'inglês':
+        return [const Color(0xFFEF4444), const Color(0xFFDC2626)];
+      case 'educação física':
+        return [const Color(0xFF84CC16), const Color(0xFF65A30D)];
+      case 'artes':
+        return [const Color(0xFFEC4899), const Color(0xFFDB2777)];
+      default:
+        return [const Color(0xFF6366F1), const Color(0xFF8B5CF6)];
+    }
+  }
+
+  IconData _getCourseIcon(String subject) {
+    switch (subject.toLowerCase()) {
+      case 'matemática':
+        return Icons.calculate_rounded;
+      case 'português':
+        return Icons.menu_book_rounded;
+      case 'ciências':
+        return Icons.science_rounded;
+      case 'história':
+        return Icons.account_balance_rounded;
+      case 'geografia':
+        return Icons.public_rounded;
+      case 'inglês':
+        return Icons.translate_rounded;
+      case 'educação física':
+        return Icons.sports_soccer_rounded;
+      case 'artes':
+        return Icons.palette_rounded;
+      default:
+        return Icons.school_rounded;
+    }
+  }
+
+  Color _getMaterialColor(String type) {
+    switch (type.toLowerCase()) {
+      case 'pdf':
+        return const Color(0xFFEF4444);
+      case 'video':
+        return const Color(0xFF8B5CF6);
+      case 'audio':
+        return const Color(0xFF10B981);
+      case 'link':
+        return const Color(0xFF3B82F6);
+      default:
+        return const Color(0xFF6B7280);
+    }
+  }
+
+  IconData _getMaterialIcon(String type) {
+    switch (type.toLowerCase()) {
+      case 'pdf':
+        return Icons.picture_as_pdf_rounded;
+      case 'video':
+        return Icons.play_circle_outline_rounded;
+      case 'audio':
+        return Icons.audiotrack_rounded;
+      case 'link':
+        return Icons.link_rounded;
+      default:
+        return Icons.description_rounded;
+    }
   }
 }

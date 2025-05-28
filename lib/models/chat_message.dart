@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 // Enum para definir os status da mensagem
 enum MessageStatus {
   sending,   // Mensagem está sendo enviada
@@ -16,7 +14,8 @@ enum MessageType {
   video,     // Vídeo
   file,      // Arquivo anexado
   audio,     // Mensagem de áudio
-  system     // Mensagem do sistema (aviso, notificação, etc.)
+  system,    // Mensagem do sistema (aviso, notificação, etc.)
+  notification // Mensagem de notificação
 }
 
 class ChatMessage {

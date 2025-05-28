@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
-/// Extensão com widgets e utilidades específicas para iOS
-extension IOSUtilities {
+/// Classe com widgets e utilidades específicas para iOS
+class IOSUtilities {
 
   /// Retorna um botão estilo iOS
   static Widget buildIOSButton({

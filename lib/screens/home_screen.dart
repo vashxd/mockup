@@ -12,149 +12,218 @@ class HomeScreen extends StatelessWidget {
     // Detectar se estamos na web e se a tela é grande
     final isLargeScreen = MediaQuery.of(context).size.width > 800;
     final isWebOrTablet = MediaQuery.of(context).size.width > 600;
-    
-    return Scaffold(
-      backgroundColor: Colors.white,
+      return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
       appBar: AppBar(
-        backgroundColor: const Color(0xFF003366),
         title: Row(
           children: [
-            Image.asset(
-              'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
-              width: 30,
-              height: 30,
+            Container(
+              padding: const EdgeInsets.all(6),
+              decoration: BoxDecoration(
+                color: Colors.white.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Image.asset(
+                'assets/logo/ChatGPT Image 16 de mai. de 2025, 12_10_18.png',
+                width: 24,
+                height: 24,
+              ),
             ),
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
             if (isWebOrTablet)
-              const Text("Escola App - Portal do Aluno"),
+              const Text("Portal do Aluno"),
           ],
         ),
         actions: [
-          PopupMenuButton<String>(
-            offset: const Offset(0, 40),
-            icon: CircleAvatar(
-              radius: 18,
-              backgroundImage: student.profileImagePath != null
-                ? AssetImage(student.profileImagePath!)
-                : NetworkImage(
-                    'https://placehold.co/100x100?text=${student.name[0]}',
-                  ) as ImageProvider,
-            ),
-            onSelected: (value) {
-              if (value == 'profile') {
-                Navigator.pushNamed(context, '/profile', arguments: student);
-              } else if (value == 'logout') {
-                // Navegando para a tela de login
-                Navigator.pushNamedAndRemoveUntil(
-                  context, 
-                  '/login', 
-                  (route) => false
-                );
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
-                value: 'profile',
-                child: Row(
-                  children: [
-                    Icon(Icons.person),
-                    SizedBox(width: 8),
-                    Text('Perfil'),
-                  ],
+          Container(
+            margin: const EdgeInsets.only(right: 16),
+            child: PopupMenuButton<String>(
+              offset: const Offset(0, 50),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              child: Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.2),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: CircleAvatar(
+                  radius: 18,
+                  backgroundColor: Colors.white,
+                  backgroundImage: student.profileImagePath != null
+                    ? AssetImage(student.profileImagePath!)
+                    : NetworkImage(
+                        'https://placehold.co/100x100?text=${student.name[0]}',
+                      ) as ImageProvider,
                 ),
               ),
-              const PopupMenuItem<String>(
-                value: 'logout',
-                child: Row(
-                  children: [
-                    Icon(Icons.exit_to_app),
-                    SizedBox(width: 8),
-                    Text('Sair'),
-                  ],
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(width: 16),
-        ],
-      ),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Container(
-            // Limitar a largura máxima do conteúdo em telas grandes
-            constraints: BoxConstraints(
-              maxWidth: isLargeScreen ? 1200 : double.infinity,
-            ),
-            padding: EdgeInsets.symmetric(
-              horizontal: isWebOrTablet ? 40 : 16,
-              vertical: 20,
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Perfil do usuário
-                Center(
-                  child: Column(
+              onSelected: (value) {
+                if (value == 'profile') {
+                  Navigator.pushNamed(context, '/profile', arguments: student);
+                } else if (value == 'logout') {
+                  Navigator.pushNamedAndRemoveUntil(
+                    context, 
+                    '/login', 
+                    (route) => false
+                  );
+                }
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                PopupMenuItem<String>(
+                  value: 'profile',
+                  child: Row(
                     children: [
-                      CircleAvatar(
-                        radius: isWebOrTablet ? 60 : 40,
+                      Icon(Icons.person_outline, color: Theme.of(context).colorScheme.primary),
+                      const SizedBox(width: 12),
+                      const Text('Perfil'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem<String>(
+                  value: 'logout',
+                  child: Row(
+                    children: [
+                      Icon(Icons.logout, color: Colors.red.shade400),
+                      const SizedBox(width: 12),
+                      Text('Sair', style: TextStyle(color: Colors.red.shade400)),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),      body: SingleChildScrollView(
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: isLargeScreen ? 1200 : double.infinity,
+          ),
+          margin: EdgeInsets.symmetric(
+            horizontal: isWebOrTablet ? 24 : 16,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 24),
+              
+              // Header com saudação
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.secondary,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      blurRadius: 20,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "Olá, ${student.name.split(' ')[0]}! 👋",
+                            style: const TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(height: 8),                          Text(
+                            "Bem-vindo ao Portal do Aluno",
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white.withOpacity(0.9),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
+                      child: CircleAvatar(
+                        radius: 32,
+                        backgroundColor: Colors.white,
                         backgroundImage: student.profileImagePath != null
                           ? AssetImage(student.profileImagePath!)
                           : NetworkImage(
                               'https://placehold.co/200x200?text=${student.name[0]}',
                             ) as ImageProvider,
                       ),
-                      const SizedBox(height: 16),
-                      Text(
-                        "Bem-vindo(a), ${student.name.split(' ')[0]}",
-                        style: TextStyle(
-                          fontSize: isWebOrTablet ? 24 : 18,
-                          fontWeight: FontWeight.bold,
-                          color: const Color(0xFF003366),
-                        ),
-                      ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
+              ),
                 
-                const SizedBox(height: 30),
-                
-                // Seção "MEU DIA"
-                Text(
-                  'MEU DIA',
-                  style: TextStyle(
-                    fontSize: isWebOrTablet ? 18 : 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+              const SizedBox(height: 32),
+              
+              // Seção "MEU DIA"
+              Text(
+                'Meu Dia',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF1F2937),
                 ),
-                const SizedBox(height: 16),
-                
-                // Cards de serviço "MEU DIA" - Layout responsivo
-                isLargeScreen 
-                  ? _buildLargeScreenDailyServices(context)
-                  : _buildMobileScreenDailyServices(context),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Acesse rapidamente suas atividades do dia',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFF6B7280),
+                ),
+              ),
+              const SizedBox(height: 20),
+              
+              // Cards de serviço "MEU DIA" - Layout responsivo
+              isLargeScreen 
+                ? _buildLargeScreenDailyServices(context)
+                : _buildMobileScreenDailyServices(context),
 
-                const SizedBox(height: 30),
-                
-                // Seção "OUTROS SERVIÇOS"
-                Text(
-                  'OUTROS SERVIÇOS',
-                  style: TextStyle(
-                    fontSize: isWebOrTablet ? 18 : 14,
-                    fontWeight: FontWeight.bold,
-                  ),
+              const SizedBox(height: 40),
+              
+              // Seção "OUTROS SERVIÇOS"
+              Text(
+                'Outros Serviços',
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                  fontWeight: FontWeight.w700,
+                  color: const Color(0xFF1F2937),
                 ),
-                
-                const SizedBox(height: 16),
-                
-                // Cards de outros serviços - Layout responsivo
-                isLargeScreen 
-                  ? _buildLargeScreenServices(context)
-                  : _buildMobileScreenServices(context),
-                
-                const SizedBox(height: 30),
-              ],
-            ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                'Explore todos os recursos disponíveis',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: const Color(0xFF6B7280),
+                ),
+              ),
+              
+              const SizedBox(height: 20),
+              
+              // Cards de outros serviços - Layout responsivo
+              isLargeScreen 
+                ? _buildLargeScreenServices(context)
+                : _buildMobileScreenServices(context),
+              
+              const SizedBox(height: 40),
+            ],
           ),
         ),
       ),
@@ -202,36 +271,42 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
   Widget _buildMobileScreenDailyServices(BuildContext context) {
     // Layout para telas menores (mobile)
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        _buildServiceItem(
-          context,
-          icon: Icons.book,
-          label: 'Atividade',
-          onTap: () {
-            Navigator.pushNamed(context, '/activities');
-          },
-          isLargeScreen: false,
+        Expanded(
+          child: _buildServiceItem(
+            context,
+            icon: Icons.book,
+            label: 'Atividade',
+            onTap: () {
+              Navigator.pushNamed(context, '/activities');
+            },
+            isLargeScreen: false,
+          ),
         ),
-        _buildServiceItem(
-          context,
-          icon: Icons.calendar_today,
-          label: 'Calendário',
-          onTap: () {
-            Navigator.pushNamed(context, '/calendar');
-          },
-          isLargeScreen: false,
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildServiceItem(
+            context,
+            icon: Icons.calendar_today,
+            label: 'Calendário',
+            onTap: () {
+              Navigator.pushNamed(context, '/calendar');
+            },
+            isLargeScreen: false,
+          ),
         ),
-        _buildServiceItem(
-          context,
-          icon: Icons.chat_bubble_outline,
-          label: 'Comunicação',
-          onTap: () {},
-          isLargeScreen: false,
+        const SizedBox(width: 12),
+        Expanded(
+          child: _buildServiceItem(
+            context,
+            icon: Icons.chat_bubble_outline,
+            label: 'Comunicação',
+            onTap: () {},
+            isLargeScreen: false,
+          ),
         ),
       ],
     );
@@ -299,9 +374,8 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
   Widget _buildMobileScreenServices(BuildContext context) {
-    // Layout original para telas menores (mobile)
+    // Layout para telas menores (mobile) - Layout em grid 2x2 com altura fixa
     return Column(
       children: [
         Row(
@@ -317,12 +391,12 @@ class HomeScreen extends StatelessWidget {
                 showArrow: true,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: _buildServiceCard(
                 context,
                 icon: Icons.notifications_none,
-                label: 'Notificação',
+                label: 'Avisos',
                 onTap: () {
                   Navigator.pushNamed(context, '/notifications');
                 },
@@ -331,7 +405,7 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 16),
+        const SizedBox(height: 12),
         Row(
           children: [
             Expanded(
@@ -345,12 +419,12 @@ class HomeScreen extends StatelessWidget {
                 showExternalIcon: true,
               ),
             ),
-            const SizedBox(width: 16),
+            const SizedBox(width: 12),
             Expanded(
               child: _buildServiceCard(
                 context,
                 icon: Icons.insert_drive_file,
-                label: 'Documentos',
+                label: 'Arquivos',
                 onTap: () {
                   Navigator.pushNamed(context, '/documents');
                 },
@@ -362,103 +436,131 @@ class HomeScreen extends StatelessWidget {
       ],
     );
   }
-
-  Widget _buildServiceItem(BuildContext context,
-      {required IconData icon, required String label, required VoidCallback onTap, bool isLargeScreen = false}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: isLargeScreen ? null : MediaQuery.of(context).size.width / 3.5,
-        height: isLargeScreen ? 150 : 100,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF0F4F8),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: isLargeScreen ? [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              spreadRadius: 0,
-              offset: const Offset(0, 2),
-            )
-          ] : null,
+  Widget _buildServiceItem(BuildContext context, {required IconData icon, required String label, required VoidCallback onTap, bool isLargeScreen = false}) {
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+        side: BorderSide(
+          color: Colors.grey.shade200,
+          width: 1,
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: const Color(0xFF003366),
-              size: isLargeScreen ? 42 : 28,
-            ),
-            SizedBox(height: isLargeScreen ? 16 : 8),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: isLargeScreen ? 18 : 14,
-                fontWeight: isLargeScreen ? FontWeight.bold : FontWeight.normal,
-                color: const Color(0xFF003366),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(20),
+        child: Container(
+          height: isLargeScreen ? 140 : 100,
+          padding: const EdgeInsets.all(12),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(isLargeScreen ? 16 : 10),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary,
+                      Theme.of(context).colorScheme.secondary,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+                      blurRadius: 12,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.white,
+                  size: isLargeScreen ? 28 : 18,
+                ),
               ),
-            ),
-          ],
+              SizedBox(height: isLargeScreen ? 12 : 6),
+              Flexible(
+                child: Text(
+                  label,
+                  style: TextStyle(
+                    fontSize: isLargeScreen ? 14 : 11,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF1F2937),
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  Widget _buildServiceCard(BuildContext context,
+  }  Widget _buildServiceCard(BuildContext context,
       {required IconData icon,
       required String label,
       required VoidCallback onTap,
       bool showArrow = false,
       bool showExternalIcon = false,
       bool isLargeScreen = false}) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        height: isLargeScreen ? 120 : 80,
-        decoration: BoxDecoration(
-          color: const Color(0xFFF0F4F8),
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: isLargeScreen ? [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.05),
-              blurRadius: 10,
-              spreadRadius: 0,
-              offset: const Offset(0, 2),
-            )
-          ] : null,
+    return Card(
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(
+          color: Colors.grey.shade200,
+          width: 1,
         ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: isLargeScreen ? 24.0 : 16.0),
+      ),
+      child: InkWell(
+        onTap: onTap,
+        borderRadius: BorderRadius.circular(16),
+        child: Container(
+          height: isLargeScreen ? 120 : 90,
+          padding: EdgeInsets.symmetric(
+            horizontal: isLargeScreen ? 24.0 : 12.0,
+            vertical: isLargeScreen ? 16.0 : 12.0,
+          ),
           child: Row(
             children: [
-              Icon(
-                icon,
-                color: const Color(0xFF003366),
-                size: isLargeScreen ? 32 : 24,
+              Container(
+                padding: EdgeInsets.all(isLargeScreen ? 12 : 8),
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  icon,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: isLargeScreen ? 28 : 20,
+                ),
               ),
-              SizedBox(width: isLargeScreen ? 24 : 16),
+              SizedBox(width: isLargeScreen ? 20 : 8),
               Expanded(
                 child: Text(
                   label,
                   style: TextStyle(
-                    fontSize: isLargeScreen ? 18 : 14,
-                    fontWeight: isLargeScreen ? FontWeight.bold : FontWeight.normal,
-                    color: const Color(0xFF003366),
+                    fontSize: isLargeScreen ? 16 : 13,
+                    fontWeight: FontWeight.w600,
+                    color: const Color(0xFF1F2937),
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
               if (showArrow)
                 Icon(
                   Icons.arrow_forward_ios,
-                  color: const Color(0xFF003366),
-                  size: isLargeScreen ? 20 : 16,
+                  color: const Color(0xFF9CA3AF),
+                  size: 14,
                 ),
               if (showExternalIcon)
                 Icon(
                   Icons.open_in_new,
-                  color: const Color(0xFF003366),
-                  size: isLargeScreen ? 20 : 16,
+                  color: const Color(0xFF9CA3AF),
+                  size: 14,
                 ),
             ],
           ),

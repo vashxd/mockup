@@ -51,7 +51,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       );
     }
   }
-
   void _sendMessage() {
     if (_messageController.text.trim().isEmpty) return;
 
@@ -61,6 +60,9 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       senderName: 'Sâmilly Cavalcante',
       content: _messageController.text.trim(),
       timestamp: DateTime.now(),
+      type: MessageType.text,
+      isSentByMe: true,
+      status: MessageStatus.sent,
       isRead: false,
     );
 
@@ -252,14 +254,12 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             // Avatar para mensagens de outros
-                            if (!isMyMessage && message.type != MessageType.notification)
-                              CircleAvatar(
+                            if (!isMyMessage && message.type != MessageType.notification)                              CircleAvatar(
                                 radius: 16,
-                                backgroundColor: Colors.grey[300],
-                                child: Text(
-                                  message.senderName[0],
+                                backgroundColor: Colors.grey[300] ?? Colors.grey,                                child: Text(
+                                  (message.senderName ?? 'U')[0],
                                   style: TextStyle(
-                                    color: Colors.grey[700],
+                                    color: Colors.grey[700] ?? Colors.grey,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
@@ -288,9 +288,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                                     // Nome do remetente (para mensagens não enviadas por mim)
                                     if (!isMyMessage && message.type != MessageType.notification)
                                       Padding(
-                                        padding: const EdgeInsets.only(bottom: 4.0),
-                                        child: Text(
-                                          message.senderName,
+                                        padding: const EdgeInsets.only(bottom: 4.0),                                        child: Text(
+                                          message.senderName ?? 'Usuário',
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: textColor.withOpacity(0.8),

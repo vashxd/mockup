@@ -6,7 +6,6 @@ import '../models/eclass_course.dart';
 import '../models/eclass_material.dart';
 import '../models/activity.dart';
 import '../models/calendar_event.dart';
-import '../models/chat_message.dart';
 import '../models/chat_conversation.dart';
 import 'package:flutter/material.dart';
 
@@ -191,7 +190,6 @@ class MockData {
       ),
     ];
   }
-
   // Dados mockados do e-Class
   List<EClassCourse> getEClassCourses() {
     return [
@@ -203,6 +201,13 @@ class MockData {
         progress: 0.75,
         materialsCount: 12,
         activitiesCount: 8,
+        subject: 'Matemática',
+        title: 'Matemática - 8º Ano',
+        description: 'Curso completo de matemática para o 8º ano do ensino fundamental',
+        totalLessons: 24,
+        duration: 48,
+        level: 'Intermediário',
+        newMaterials: 2,
       ),
       EClassCourse(
         id: '2',
@@ -212,6 +217,13 @@ class MockData {
         progress: 0.60,
         materialsCount: 15,
         activitiesCount: 7,
+        subject: 'Português',
+        title: 'Português - 8º Ano',
+        description: 'Curso de língua portuguesa com foco em gramática e literatura',
+        totalLessons: 30,
+        duration: 60,
+        level: 'Intermediário',
+        newMaterials: 1,
       ),
       EClassCourse(
         id: '3',
@@ -221,6 +233,13 @@ class MockData {
         progress: 0.40,
         materialsCount: 10,
         activitiesCount: 5,
+        subject: 'História',
+        title: 'História - 8º Ano',
+        description: 'História do Brasil e História Geral',
+        totalLessons: 20,
+        duration: 40,
+        level: 'Básico',
+        newMaterials: 0,
       ),
       EClassCourse(
         id: '4',
@@ -230,6 +249,13 @@ class MockData {
         progress: 0.85,
         materialsCount: 8,
         activitiesCount: 6,
+        subject: 'Geografia',
+        title: 'Geografia - 8º Ano',
+        description: 'Geografia física e humana do Brasil e do mundo',
+        totalLessons: 18,
+        duration: 36,
+        level: 'Intermediário',
+        newMaterials: 3,
       ),
       EClassCourse(
         id: '5',
@@ -239,6 +265,13 @@ class MockData {
         progress: 0.65,
         materialsCount: 14,
         activitiesCount: 9,
+        subject: 'Ciências',
+        title: 'Ciências - 8º Ano',
+        description: 'Física, Química e Biologia aplicadas ao ensino fundamental',
+        totalLessons: 26,
+        duration: 52,
+        level: 'Intermediário',
+        newMaterials: 1,
       ),
     ];
   }
@@ -546,6 +579,18 @@ class MockData {
       total += subject.frequency;
     }
     return total / getSubjects().length;
+  }
+
+  // Método para obter lições de um curso específico
+  List<EClassMaterial> getLessonsForCourse(String courseId) {
+    // Para simplicidade, retornamos os materiais de matemática para todos os cursos
+    return getMathMaterials();
+  }
+  
+  // Método para obter materiais de um curso específico
+  List<EClassMaterial> getMaterialsForCourse(String courseId) {
+    // Para simplicidade, retornamos os materiais de matemática para todos os cursos
+    return getMathMaterials();
   }
 
   // Dados mockados para o módulo de comunicação

@@ -15,4 +15,11 @@ class Subject {
   double getGrade(String term) {
     return grades[term] ?? 0.0;
   }
+
+  // Getter para calcular a nota final (média das notas)
+  double? get finalGrade {
+    if (grades.isEmpty) return null;
+    final total = grades.values.reduce((a, b) => a + b);
+    return total / grades.length;
+  }
 }

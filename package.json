@@ -1,0 +1,9 @@
+{
+  "name": "escola-app-static",
+  "version": "1.0.0",
+  "description": "Static Flutter Web App",
+  "private": true,
+  "scripts": {
+    "build": "echo 'Static files already built'"
+  }
+}

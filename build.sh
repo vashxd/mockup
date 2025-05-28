@@ -8,6 +8,24 @@ echo "🚀 Iniciando setup Flutter para Vercel..."
 # Definir diretório do Flutter
 FLUTTER_DIR="$PWD/flutter"
 
+# Fix git ownership issues
+git config --global --add safe.directory /vercel/path0/flutter 2>/dev/null || true
+git config --global --add safe.directory "$FLUTTER_DIR" 2>/dev/null || true
+git config --global --add safe.directory "$PWD" 2>/dev/null || true
+
+# Verificar se estamos no diretório correto
+echo "📁 Diretório atual: $PWD"
+echo "📋 Arquivos no diretório:"
+ls -la
+
+# Verificar se pubspec.yaml existe
+if [ ! -f "pubspec.yaml" ]; then
+    echo "❌ Erro: pubspec.yaml não encontrado no diretório atual!"
+    echo "📁 Conteúdo do diretório:"
+    ls -la
+    exit 1
+fi
+
 # Verificar se Flutter já está instalado
 if [ -d "$FLUTTER_DIR" ] && [ -f "$FLUTTER_DIR/bin/flutter" ]; then
     echo "✅ Flutter já instalado!"
@@ -30,6 +48,9 @@ else
     # Limpar arquivo temporário
     rm flutter.tar.xz
     
+    # Fix git ownership issues for Flutter directory
+    git config --global --add safe.directory "$FLUTTER_DIR" 2>/dev/null || true
+    
     # Adicionar ao PATH
     export PATH="$FLUTTER_DIR/bin:$PATH"
     
@@ -40,17 +61,11 @@ fi
 
 # Configurar Flutter para web
 echo "🌐 Configurando Flutter para web..."
-flutter config --enable-web
+flutter config --enable-web --no-analytics
 
 # Instalar dependências
 echo "📦 Instalando dependências do projeto..."
 flutter pub get
-
-# Verificar se pubspec.yaml existe
-if [ ! -f "pubspec.yaml" ]; then
-    echo "❌ Erro: pubspec.yaml não encontrado!"
-    exit 1
-fi
 
 # Fazer build para web com otimizações
 echo "🔨 Fazendo build otimizado para web..."

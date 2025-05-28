@@ -4,46 +4,30 @@ Uma aplicação Flutter moderna para gestão escolar.
 
 ## 🚀 Deploy no Vercel
 
-### Opção 1: Deploy Automático (Recomendado)
-1. **Faça o build do projeto:**
-   ```bash
-   .\deploy_vercel.ps1
-   ```
-
-2. **Acesse [Vercel.com](https://vercel.com) e faça login**
-
-3. **Importe seu repositório:**
-   - Clique em "New Project"
-   - Conecte seu GitHub/GitLab
-   - Selecione este repositório
-
-4. **Configure o projeto:**
-   - Framework Preset: **Other**
-   - Build Command: `flutter build web --release`
-   - Output Directory: `build/web`
-   - Install Command: `flutter pub get`
-
-### Opção 2: Deploy via CLI
-```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Fazer login
-vercel login
-
-# Deploy
-vercel --prod
+### ⚡ Deploy Rápido (Recomendado)
+```powershell
+.\deploy_to_vercel.ps1
 ```
 
-## 🛠️ Comandos Úteis
+### 📋 Deploy Manual
+```powershell
+# 1. Fazer build local
+flutter build web --release
 
-- **Build para produção:** `flutter build web --release`
-- **Rodar localmente:** `flutter run -d chrome`
-- **Deploy Vercel:** `.\deploy_vercel.ps1`
+# 2. Commit e push
+git add .
+git commit -m "Deploy atualizado"
+git push origin main
+```
 
-## 🌐 Links
-- **App Live:** [escola-app.vercel.app](https://escola-app.vercel.app)
-- **Vercel Dashboard:** [vercel.com/dashboard](https://vercel.com/dashboard)
+### ⚙️ Como Funciona
+- **Build local** com Flutter instalado na sua máquina
+- **Deploy estático** no Vercel (sem necessidade de Flutter no servidor)
+- **Automático** a cada push no GitHub
+
+### 🌐 URLs
+- **App Live:** [mockup-vashxd.vercel.app](https://mockup-vashxd.vercel.app)
+- **Dashboard:** [vercel.com/vashxd/mockup](https://vercel.com/vashxd/mockup)
 
 ## Getting Started
 

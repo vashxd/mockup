@@ -1,16 +1,4 @@
 {
   "version": 2,
-  "name": "escola-app",
-  "builds": [
-    {
-      "src": "build/web/**",
-      "use": "@vercel/static"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/index.html"
-    }
-  ]
+  "name": "escola-app"
 }

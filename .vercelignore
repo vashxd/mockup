@@ -1,4 +1,4 @@
-# Arquivos a serem ignorados no deploy do Vercel
+# Arquivos de desenvolvimento Flutter
 .dart_tool/
 .packages
 pubspec.lock
@@ -10,10 +10,16 @@ windows/
 test/
 lib/
 web/
-assets/
+build/
+assets/images/
+assets/logo/
 *.md
 *.ps1
 *.bat
 analysis_options.yaml
 pubspec.yaml
 escola_app.iml
+.idea/
+.git/
+.gitignore
+.metadata
